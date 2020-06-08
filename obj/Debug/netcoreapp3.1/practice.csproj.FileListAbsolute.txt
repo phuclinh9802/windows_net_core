@@ -130,8 +130,6 @@ C:\Users\philip\source\repos\practice\practice\obj\Debug\netcoreapp3.1\practice.
 C:\Users\philip\source\repos\practice\practice\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
 C:\Users\philip\source\repos\practice\practice\bin\Debug\netcoreapp3.1\Pomelo.EntityFrameworkCore.MySql.dll
 C:\Users\philip\source\repos\practice\practice\bin\Debug\netcoreapp3.1\Pomelo.JsonObject.dll
-C:\Users\philip\source\repos\practice\practice\obj\Debug\netcoreapp3.1\practice.csprojAssemblyReference.cache
-C:\Users\philip\source\repos\practice\practice\obj\Debug\netcoreapp3.1\practice.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\philip\source\repos\practice\practice\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\philip\source\repos\practice\practice\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
 C:\Users\philip\source\repos\practice\practice\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
@@ -139,3 +137,6 @@ C:\Users\philip\source\repos\practice\practice\bin\Debug\netcoreapp3.1\Microsoft
 C:\Users\philip\source\repos\practice\practice\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\philip\source\repos\practice\practice\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
 C:\Users\philip\source\repos\practice\practice\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\philip\source\repos\practice\practice\bin\Debug\netcoreapp3.1\AWSSDK.Core.dll
+C:\Users\philip\source\repos\practice\practice\obj\Debug\netcoreapp3.1\practice.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\philip\source\repos\practice\practice\obj\Debug\netcoreapp3.1\practice.csprojAssemblyReference.cache

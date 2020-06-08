@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Server.IISIntegration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using practice.Services;
 
 namespace practice
 {
@@ -75,6 +76,8 @@ namespace practice
             services.AddControllers();
             services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddAuthentication(IISDefaults.AuthenticationScheme);
+            services.AddScoped<IUserService, UserService>();
+
 
 
 

@@ -5,20 +5,51 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using practice.Models;
+using practice.Services;
 
 namespace practice.Context
 {
-    [Route("api")]
     [ApiController]
+    [Route("api/auth")]
+    [EnableCors("CorsPolicy")]
     public class UserController : Controller
     {
+        private IUserService _userService;
+
+        // Dependency Injection
+        public UserController(IUserService userService)
+        {
+            _userService = userService;
+        }
+
+
+        [HttpPost, Route("register")]
+        public IActionResult Register([FromBody] Register user)
+        {
+            //var users = _mapper.Map<Register>(user);
+
+            try
+            {
+                // create user
+                _userService.Create(user, user.Password);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                // return error message if there was an exception
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
         [HttpPost, Route("login")]
         public IActionResult Login([FromBody] User user)
         {
+
             if (user == null)
             {
                 return BadRequest("Invalid client request");
@@ -60,7 +91,7 @@ namespace practice.Context
                     issuer: "https://localhost:5001",
                     audience: "https://localhost:5001",
                     claims: claims,
-                    expires: DateTime.Now.AddMinutes(3),
+                    expires: DateTime.Now.AddMinutes(30),
                     signingCredentials: signinCredentials
                 );
 
@@ -70,11 +101,17 @@ namespace practice.Context
 
             else if (user.UserName != "phil" || user.UserName != "nguyet")
             {
-                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("UserCode"));
+                var loginUser = _userService.Authenticate(user.UserName, user.Password);
+
+                if (loginUser == null)
+                {
+                    return NotFound("User is not found");
+                }
+                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Thisisforuseronly"));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(ClaimTypes.Name, loginUser.UserName),
                     new Claim(ClaimTypes.Role, "User")
                 };
 
@@ -82,17 +119,23 @@ namespace practice.Context
                     issuer: "https://localhost:5001",
                     audience: "https://localhost:5001",
                     claims: claims,
-                    expires: DateTime.Now.AddMinutes(1),
+                    expires: DateTime.Now.AddMinutes(10),
                     signingCredentials: signinCredentials
                 );
 
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
-                return Ok(new { Token = tokenString });
+
+                return Ok(new
+                {
+                    Id = loginUser.Id,
+                    UserName = loginUser.UserName,
+                    FirstName = loginUser.FirstName,
+                    LastName = loginUser.LastName,
+                    Token = tokenString
+                });
+
             }
-            else
-            {
-                return Unauthorized();
-            }
+            return Unauthorized(new { message = "Username/Password is incorrect. Please try again!" });
         }
     }
 }
